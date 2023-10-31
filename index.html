@@ -19,7 +19,28 @@
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
       crossorigin="anonymous"
     ></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <title>Document</title>
+    <style>
+      .ratings {
+        margin-right: 10px;
+      }
+
+      .ratings i {
+        color: #cecece;
+        font-size: 32px;
+      }
+
+      .rating-color {
+        color: #fbc634 !important;
+      }
+
+      .review-count {
+        font-weight: 400;
+        margin-bottom: 2px;
+        font-size: 24px !important;
+      }
+    </style>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -44,26 +65,7 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Link</a>
             </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Dropdown
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
-            </li>
+
             <li class="nav-item">
               <a
                 class="nav-link disabled"
@@ -89,29 +91,59 @@
       </div>
     </nav>
 
-    <div class="container">
-      <div class="card mt-2">
-        <div class="card-header">Featured</div>
-        <div class="card-body">
-          <h5 class="card-title">Special title treatment</h5>
-          <p class="card-text">
-            With supporting text below as a natural lead-in to additional
-            content.
-          </p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header">Featured</div>
-        <div class="card-body">
-          <h5 class="card-title">Special title treatment</h5>
-          <p class="card-text">
-            With supporting text below as a natural lead-in to additional
-            content.
-          </p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-      </div>
+    <div class="container mt-5">
+      <div class="row" id="jsonContainer"></div>
+      <!-- Content will be dynamically added here -->
     </div>
+    <script>
+      // Replace 'your_json_url_here' with the actual URL of the JSON resource you want to fetch.
+      const jsonUrl = "https://dummyjson.com/products";
+
+      const jsonContainer = document.getElementById("jsonContainer");
+
+      fetch(jsonUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((jsonDataArray) => {
+          // Loop through the JSON array and create Bootstrap cards for each item.
+          console.log(jsonDataArray);
+
+          jsonDataArray.products.forEach((item, index) => {
+            const card = document.createElement("div");
+            card.className = "col-md-4 mb-3 d-flex align-items-stretch";
+            card.innerHTML = `<div class ="card"  >
+                              <img class="card-img-top" src="${item.images[0]}" width="200" " alt="Card image cap">
+                              <div class="card-body">
+                                <h5 class="card-title">${item.title}</h5>
+                                <p class="card-text">${item.brand} ${item.description}</p>
+                                <p class="card-text text-danger">${item.price} $ </p>
+                                  <div class="d-flex justify-content-between align-items-center">
+            <div class="ratings">
+                <i class="fa fa-star rating-color"></i>
+                <i class="fa fa-star rating-color"></i>
+                <i class="fa fa-star rating-color"></i>
+                <i class="fa fa-star rating-color"></i>
+                <i class="fa fa-star"></i>
+            </div>
+            <h5 class="review-count">${item.rating} Reviews</h5>
+        </div>
+                              
+                              </div>
+                            </div>
+
+                    `;
+            // <a href="#" class="btn btn-primary">Order</a>
+            jsonContainer.appendChild(card);
+          });
+        })
+        .catch((error) => {
+          console.error("Fetch error:", error);
+          jsonContainer.innerHTML = "<p>Error fetching JSON data.</p>";
+        });
+    </script>
   </body>
 </html>
