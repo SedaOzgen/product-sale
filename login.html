@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <style>
+      body {
+        background: #007bff;
+        background: linear-gradient(to right, #0062e6, #33aeff);
+      }
+
+      .btn-login {
+        font-size: 0.9rem;
+        letter-spacing: 0.05rem;
+        padding: 0.75rem 1rem;
+      }
+
+      .btn-google {
+        color: white !important;
+        background-color: #ea4335;
+      }
+
+      .btn-facebook {
+        color: white !important;
+        background-color: #3b5998;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div
+          class="col-md-12 min-vh-100 d-flex flex-column justify-content-center"
+        >
+          <div class="row">
+            <div class="col-lg-6 col-md-8 mx-auto">
+              <!-- form card login -->
+              <div class="card rounded shadow shadow-sm">
+                <div class="card-header">
+                  <h3 class="mb-0">Login</h3>
+                </div>
+                <div class="card-body">
+                  <form
+                    class="form"
+                    role="form"
+                    autocomplete="off"
+                    id="formLogin"
+                    novalidate=""
+                    method="POST"
+                    action="index.html"
+                  >
+                    <div class="form-group">
+                      <label for="uname1">Username</label>
+                      <input
+                        type="text"
+                        class="form-control form-control-lg rounded-0"
+                        name="username"
+                        id="username"
+                        required=""
+                      />
+                      <div class="invalid-feedback">
+                        Oops, you missed this one.
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Password</label>
+                      <input
+                        type="password"
+                        class="form-control form-control-lg rounded-0"
+                        id="password"
+                        name="password"
+                        required=""
+                      />
+                      <div class="invalid-feedback">
+                        Enter your password too!
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      class="btn btn-success btn-lg float-right"
+                      id="btnLogin"
+                    >
+                      Login
+                    </button>
+                  </form>
+                </div>
+                <!--/card-block-->
+              </div>
+              <!-- /form card login -->
+            </div>
+          </div>
+          <!--/row-->
+        </div>
+        <!--/col-->
+      </div>
+      <!--/row-->
+    </div>
+    <!--/container-->
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('form[id="formLogin"]').validate({
+          rules: {
+            username: {
+              required: true,
+              minlength: 8,
+            },
+            password: {
+              required: true,
+              number: true,
+              minlength: 6,
+            },
+          },
+          messages: {
+            username: {
+              minlength: "username should be at least 8 characters",
+            },
+
+            password: {
+              minlength: "Password must be at least 6 characters long",
+            },
+          },
+          submitHandler: function (form) {
+            const name = "webtasarım";
+            const pass = "1234567";
+            if ($("#username").val() == name && $("#password").val() == pass) {
+              form.submit();
+            } else {
+              alert("username or password is wrong");
+            }
+          },
+        });
+      });
+
+      //   $("#commentForm").validate();
+      function login() {
+        if (
+          $("#username").val() == "admin" &&
+          $("#password").val() == "password"
+        ) {
+          alert("You are a valid user");
+        } else {
+          alert("You are not a valid user");
+        }
+      }
+    </script>
+  </body>
+</html>
